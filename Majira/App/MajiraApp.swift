@@ -11,6 +11,7 @@ import SwiftUI
 struct MajiraApp: App {
     var body: some Scene {
         WindowGroup {
+            //MARK: REFERENCE ROOT VIEW HERE
             ContentView()
         }
     }
