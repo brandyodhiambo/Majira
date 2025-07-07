@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct LandingPageView: View {
-    //@EnvironmentObject var router: Router
     @State private var animatedTitle = ""
     @State private var animatedSubtitle = ""
+    var onGetStarted: () -> Void = {}
 
 
     var body: some View {
@@ -28,8 +28,8 @@ struct LandingPageView: View {
                     .foregroundColor(Color.theme.primaryColor)
 
                 Text(animatedSubtitle)
-                    .font(.custom("Poppins-Light", size: 16))
-                    .lineLimit(5)
+                    .font(.custom("Poppins-Light", size: 14))
+                    .lineLimit(3)
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color.theme.onSurfaceColor)
                     .transition(.opacity.combined(with: .move(edge: .bottom)))
@@ -38,7 +38,7 @@ struct LandingPageView: View {
             CustomButtonView(
                 buttonName:"Get Started",
                 onTap: {
-                    //router.push(.homePage)
+                    onGetStarted()
                 }
             )
 
@@ -54,7 +54,7 @@ struct LandingPageView: View {
         .onAppear {
             Utils.shared.typeText("Majira", into: { animatedTitle = $0 }) {
                 Utils.shared.typeText(
-                    "From drizzle to sizzle, we’ve got you!",
+                    "Your daily dose of sunshine... or not!, From drizzle to sizzle, we’ve got you!",
                     into: { animatedSubtitle = $0 }
                 )
             }
@@ -65,5 +65,7 @@ struct LandingPageView: View {
 }
 
 #Preview {
-    LandingPageView()
+    LandingPageView(
+        onGetStarted: { }
+    )
 }
