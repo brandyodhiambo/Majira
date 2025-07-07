@@ -1,5 +1,5 @@
 //
-//  HomeView.swift
+//  ForeCastView.swift
 //  Majira
 //
 //  Created by Brandy Odhiambo on 07/07/2025.
@@ -7,17 +7,16 @@
 
 import SwiftUI
 
-struct HomeView: View {
+struct ForeCastView: View {
     var body: some View {
         VStack(spacing:8){
-            Text("Home screen")
+            Text("Forecast screen")
                 .font(.title)
                 .foregroundColor(.theme.onSurfaceColor)
-                .padding()
-        }
+                .padding()        }
     }
 }
 
 #Preview {
-    HomeView()
+    ForeCastView()
 }

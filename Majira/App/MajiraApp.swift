@@ -9,10 +9,12 @@ import SwiftUI
 
 @main
 struct MajiraApp: App {
+    @StateObject var tabRouter = TabRouter()
+
     var body: some Scene {
         WindowGroup {
-            //MARK: REFERENCE ROOT VIEW HERE
-            ContentView()
+            RootTabView()
+                .environmentObject(tabRouter)
         }
     }
 }

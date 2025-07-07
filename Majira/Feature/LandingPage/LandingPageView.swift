@@ -19,7 +19,7 @@ struct LandingPageView: View {
             Image("sunRain")
                 .resizable()
                 .scaledToFill()
-                .frame(width: 200, height: 300)
+                .frame(width: 150, height: 250)
                 .foregroundColor(Color.theme.primaryColor)
             
             VStack(spacing: 5) {
