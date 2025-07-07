@@ -27,4 +27,20 @@ struct Utils {
             return formatter.string(from: date)
         }
     }
+    
+    func typeText(_ fullText: String, into target: @escaping (String) -> Void, speed: Double = 0.05, completion: @escaping () -> Void = {}) {
+        var currentText = ""
+        for (index, char) in fullText.enumerated() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + speed * Double(index)) {
+                currentText.append(char)
+                target(currentText)
+
+                if index == fullText.count - 1 {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        completion()
+                    }
+                }
+            }
+        }
+    }
 }
