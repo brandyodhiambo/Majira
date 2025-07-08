@@ -36,7 +36,7 @@ struct TemperatureCard: View {
         .frame(width: 100, height: 140)
         .background(isSelected ? Color.theme.primaryColor : Color.theme.surfaceColor.opacity(0.9))
         .cornerRadius(12)
-        .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+        .shadow(color: .theme.onSurfaceColor.opacity(0.1), radius: 8, x: 0, y: 4)
     }
 }
 
