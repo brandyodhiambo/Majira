@@ -8,16 +8,64 @@
 import SwiftUI
 
 struct CityView: View {
+    @State var text: String = ""
+    struct City {
+        let cityName: String
+        let temperature: String
+        let iconName: String
+        let weatherColor: Color
+    }
+    @State var sampleCities: [City] = [
+        City(cityName: "Nairobi", temperature: "23°", iconName: "sun.max.fill", weatherColor: .yellow),
+        City(cityName: "Mombasa", temperature: "29°", iconName: "cloud.sun.fill", weatherColor: .orange),
+        City(cityName: "Kisumu", temperature: "26°", iconName: "cloud.rain.fill", weatherColor: .blue),
+        City(cityName: "Eldoret", temperature: "19°", iconName: "cloud.fog.fill", weatherColor: .gray),
+        City(cityName: "Nakuru", temperature: "21°", iconName: "cloud.sun.fill", weatherColor: .mint)
+    ]
+    
     var body: some View {
-        VStack(spacing:8){
-            Text("City screen")
-                .font(.title)
-                .foregroundColor(.theme.onSurfaceColor)
-                .padding()
+        VStack(alignment:.leading,spacing:16){
+            InputFieldView(
+                image:"",
+                placeHolder: "Search City",
+                text: $text,
+                inputFieldStyle: .outlined
+            )
+            
+            Text("My Cities")
+                .font(.custom("Poppins-Medium", size: 16))
+                .foregroundColor(.theme.onSurfaceColor.opacity(0.7))
+            
+            ScrollView(.vertical,showsIndicators: false){
+                VStack(spacing: 12) {
+                    ForEach(sampleCities, id: \.cityName) { city in
+                        CityCardView(
+                            cityName: city.cityName,
+                            temperature: city.temperature,
+                            iconName: city.iconName,
+                            weatherColor: city.weatherColor
+                        )
+                    }
+                }
+            }
         }
+        .padding()
+        .background(Color.theme.surfaceColor)
+        .customTopAppBar(
+            title: "Choose City",
+            leadingIcon: "",
+            navbarTitleDisplayMode: .inline,
+            onLeadingTap: {},
+            trailingIcon: "moon.fill",
+            onTrailingTap: {
+                
+            }
+        )
     }
 }
 
 #Preview {
-    CityView()
+    NavigationView{
+        CityView()
+    }
 }
