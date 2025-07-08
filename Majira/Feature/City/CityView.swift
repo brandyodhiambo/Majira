@@ -16,10 +16,10 @@ struct CityView: View {
         let weatherColor: Color
     }
     @State var sampleCities: [City] = [
-        City(cityName: "Nairobi", temperature: "23°", iconName: "sun.max.fill", weatherColor: .yellow),
-        City(cityName: "Mombasa", temperature: "29°", iconName: "cloud.sun.fill", weatherColor: .orange),
-        City(cityName: "Kisumu", temperature: "26°", iconName: "cloud.rain.fill", weatherColor: .blue),
-        City(cityName: "Eldoret", temperature: "19°", iconName: "cloud.fog.fill", weatherColor: .gray),
+        City(cityName: "Nairobi", temperature: "23°", iconName: "sun.max.fill", weatherColor: .theme.sunnyYellow),
+        City(cityName: "Mombasa", temperature: "29°", iconName: "cloud.sun.fill", weatherColor: .theme.cloudColor),
+        City(cityName: "Kisumu", temperature: "26°", iconName: "cloud.rain.fill", weatherColor: .theme.rainColor),
+        City(cityName: "Eldoret", temperature: "19°", iconName: "cloud.fog.fill", weatherColor: .theme.snowColor),
         City(cityName: "Nakuru", temperature: "21°", iconName: "cloud.sun.fill", weatherColor: .mint)
     ]
     
