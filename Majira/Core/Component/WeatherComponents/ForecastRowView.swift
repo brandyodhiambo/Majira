@@ -40,8 +40,8 @@ struct ForecastRowView: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color.theme.surfaceColor.opacity(0.7))
-                .shadow(color: Color.theme.onSurfaceColor.opacity(0.3), radius: 4, x: 0, y: 2)
+                .fill(Color.theme.surfaceColor)
+                .shadow(color: Color.theme.onSurfaceColor.opacity(0.1), radius: 4, x: 0, y: 2)
         )
         .padding(.horizontal, 8)
     }

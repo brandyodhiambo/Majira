@@ -9,12 +9,6 @@ import SwiftUI
 
 struct CityView: View {
     @State var text: String = ""
-    struct City {
-        let cityName: String
-        let temperature: String
-        let iconName: String
-        let weatherColor: Color
-    }
     @State var sampleCities: [City] = [
         City(cityName: "Nairobi", temperature: "23°", iconName: "sun.max.fill", weatherColor: .theme.sunnyYellow),
         City(cityName: "Mombasa", temperature: "29°", iconName: "cloud.sun.fill", weatherColor: .theme.cloudColor),
