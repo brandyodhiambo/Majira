@@ -8,17 +8,34 @@
 import SwiftUI
 
 struct CityWeatherDetailsView: View {
-    let id:Int
+    @EnvironmentObject var router:Router
+    
+    let city: City
     var body: some View {
-        Text("City weather details")
-            .font(.title)
-            .foregroundColor(.theme.onSurfaceColor)
-            .padding()
+        VStack {
+            Text(city.cityName)
+                .font(.headline)
+            Text("\(city.temperature)°C")
+        }
+        .padding()
+        .background(Color.theme.surfaceColor)
+        .customTopAppBar(
+            title: "",
+            leadingIcon: "chevron.left",
+            navbarTitleDisplayMode: .inline,
+            onLeadingTap: {
+                router.pop()
+            },
+            trailingIcon: "moon.fill",
+            onTrailingTap: {
+                
+            }
+        )
     }
 }
 
 #Preview {
     CityWeatherDetailsView(
-        id:1
+        city:City.preview
     )
 }

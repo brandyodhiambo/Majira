@@ -12,5 +12,5 @@ enum Route:Hashable {
     case home
     case forecast
     case city
-    case cityDetails(id:Int)
+    case cityDetails(city:City)
 }

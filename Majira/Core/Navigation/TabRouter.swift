@@ -68,8 +68,10 @@ func viewForRoute(_ route: Route, router: Router) -> some View{
         CityView()
             .environmentObject(router)
 
-    case .cityDetails(let id):
-        CityWeatherDetailsView(id:id)
+    case .cityDetails(let city):
+        CityWeatherDetailsView(city: city)
+            .navigationBarBackButtonHidden()
+            .environmentObject(router)
 
     }
 }

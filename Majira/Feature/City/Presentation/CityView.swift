@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CityView: View {
+    @EnvironmentObject var tabRouter: TabRouter
+
     @State var text: String = ""
     @State var sampleCities: [City] = [
         City(cityName: "Nairobi", temperature: "23°", iconName: "sun.max.fill", weatherColor: .theme.sunnyYellow),
@@ -18,6 +20,7 @@ struct CityView: View {
     ]
     
     var body: some View {
+        let router = tabRouter.cityRouter
         VStack(alignment:.leading,spacing:16){
             InputFieldView(
                 image:"",
@@ -37,7 +40,11 @@ struct CityView: View {
                             cityName: city.cityName,
                             temperature: city.temperature,
                             iconName: city.iconName,
-                            weatherColor: city.weatherColor
+                            weatherColor: city.weatherColor,
+                            onTap: {
+                                print("tapped city: \(city.cityName)")
+                                router.push(.cityDetails(city: city))
+                            }
                         )
                     }
                 }
