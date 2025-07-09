@@ -24,7 +24,7 @@ struct CustomTopAppBar: ViewModifier {
                             onLeadingTap?()
                         }) {
                             Image(systemName: leadingIcon)
-                                .foregroundColor(Color.theme.primaryColor)
+                                .foregroundColor(Color.theme.onSurfaceColor)
                         }
                     }
                 }

@@ -12,11 +12,11 @@ struct CityView: View {
 
     @State var text: String = ""
     @State var sampleCities: [City] = [
-        City(cityName: "Nairobi", temperature: "23°", iconName: "sun.max.fill", weatherColor: .theme.sunnyYellow),
-        City(cityName: "Mombasa", temperature: "29°", iconName: "cloud.sun.fill", weatherColor: .theme.cloudColor),
-        City(cityName: "Kisumu", temperature: "26°", iconName: "cloud.rain.fill", weatherColor: .theme.rainColor),
-        City(cityName: "Eldoret", temperature: "19°", iconName: "cloud.fog.fill", weatherColor: .theme.snowColor),
-        City(cityName: "Nakuru", temperature: "21°", iconName: "cloud.sun.fill", weatherColor: .mint)
+        City(cityName: "Nairobi", temperature: "23°C", iconName: "sun.max.fill",condition: "Sunny",weatherColor: .theme.sunnyYellow),
+        City(cityName: "Mombasa", temperature: "29°C", iconName: "cloud.sun.fill",condition: "Sunny", weatherColor: .theme.cloudColor),
+        City(cityName: "Kisumu", temperature: "26°C", iconName: "cloud.rain.fill",condition: "Sunny", weatherColor: .theme.rainColor),
+        City(cityName: "Eldoret", temperature: "19°C", iconName: "cloud.fog.fill", condition: "Sunny",weatherColor: .theme.snowColor),
+        City(cityName: "Nakuru", temperature: "21°C", iconName: "cloud.sun.fill",condition: "Sunny", weatherColor: .mint)
     ]
     
     var body: some View {
