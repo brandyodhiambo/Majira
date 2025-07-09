@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct ForeCastView: View {
+    @EnvironmentObject var themesViewModel: ThemesViewModel
+    var themeToggleIcon: String {
+        themesViewModel.currentTheme == .dark ? "sun.max.fill" : "moon.fill"
+    }
     @State var sampleForecaset: [ForeCastItem] = [
         ForeCastItem(day: "Wednesday", date: "25 July", temperature: "23°", iconName: "sun.max.fill", weatherColor: .theme.sunnyYellow),
         ForeCastItem(day: "Thursday", date: "26 July", temperature: "24°", iconName: "cloud.sun.fill", weatherColor: .theme.cloudColor),
@@ -67,11 +71,15 @@ struct ForeCastView: View {
             leadingIcon: "",
             navbarTitleDisplayMode: .inline,
             onLeadingTap: {},
-            trailingIcon: "moon.fill",
+            trailingIcon: themeToggleIcon,
             onTrailingTap: {
-                
+                let nextTheme: ThemeModel = themesViewModel.currentTheme == .dark ? .light : .dark
+                themesViewModel.changeTheme(to: nextTheme)
             }
         )
+        .onAppear {
+            themesViewModel.setAppTheme()
+        }
     }
 }
 

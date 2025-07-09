@@ -9,6 +9,10 @@ import SwiftUI
 
 struct CityView: View {
     @EnvironmentObject var tabRouter: TabRouter
+    @EnvironmentObject var themesViewModel: ThemesViewModel
+    var themeToggleIcon: String {
+        themesViewModel.currentTheme == .dark ? "sun.max.fill" : "moon.fill"
+    }
 
     @State var text: String = ""
     @State var sampleCities: [City] = [
@@ -57,11 +61,15 @@ struct CityView: View {
             leadingIcon: "",
             navbarTitleDisplayMode: .inline,
             onLeadingTap: {},
-            trailingIcon: "moon.fill",
+            trailingIcon: themeToggleIcon,
             onTrailingTap: {
-                
+                let nextTheme: ThemeModel = themesViewModel.currentTheme == .dark ? .light : .dark
+                themesViewModel.changeTheme(to: nextTheme)
             }
         )
+        .onAppear {
+            themesViewModel.setAppTheme()
+        }
     }
 }
 

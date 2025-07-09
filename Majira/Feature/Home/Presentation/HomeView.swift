@@ -8,7 +8,12 @@
 import SwiftUI
 
 struct HomeView: View {
-    
+    @EnvironmentObject var themesViewModel: ThemesViewModel
+    var themeToggleIcon: String {
+        themesViewModel.currentTheme == .dark ? "sun.max.fill" : "moon.fill"
+    }
+
+
     var body: some View {
         let now = Date()
         let hours = (-2...2).map { Calendar.current.date(byAdding: .hour, value: $0, to: now)! }
@@ -75,11 +80,15 @@ struct HomeView: View {
             leadingIcon: "",
             navbarTitleDisplayMode: .inline,
             onLeadingTap: {},
-            trailingIcon: "moon.fill",
+            trailingIcon: themeToggleIcon,
             onTrailingTap: {
-               
+                let nextTheme: ThemeModel = themesViewModel.currentTheme == .dark ? .light : .dark
+                themesViewModel.changeTheme(to: nextTheme)
             }
         )
+        .onAppear {
+            themesViewModel.setAppTheme()
+        }
        
     }
     
