@@ -10,6 +10,7 @@ import SwiftUI
 struct LandingPageView: View {
     @StateObject var locationManager = LocationManager()
     @State var isLocationAuthorized = false
+    @State var isShowRequestLocationAlert = false
     @State private var animatedTitle = ""
     @State private var animatedSubtitle = ""
     var onGetStarted: () -> Void = {}
@@ -43,7 +44,7 @@ struct LandingPageView: View {
                         onGetStarted()
                     }
                     else {
-                        locationManager.requestWhenInUseAuthorization()
+                        isShowRequestLocationAlert = true
                     }
                 }
             )
@@ -75,7 +76,7 @@ struct LandingPageView: View {
                 }
             }
         }
-        .alert(isPresented: $locationManager.showLocationAlert) {
+        .alert(isPresented: $isShowRequestLocationAlert) {
             Alert(
                 title: Text("Location permision is required to proceed"),
                 message: Text("Please enable location access in settings to proceed."),
