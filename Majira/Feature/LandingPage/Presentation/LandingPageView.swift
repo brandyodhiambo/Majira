@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct LandingPageView: View {
+    @StateObject var locationManager = LocationManager()
+    @State var isLocationAuthorized = false
     @State private var animatedTitle = ""
     @State private var animatedSubtitle = ""
     var onGetStarted: () -> Void = {}
-
-
+    
     var body: some View {
         VStack(spacing: 60){
-   
+            
             Image("sunRain")
                 .resizable()
                 .scaledToFill()
@@ -26,22 +27,27 @@ struct LandingPageView: View {
                 Text(animatedTitle)
                     .font(.custom("Poppins-Bold", size: 30))
                     .foregroundColor(Color.theme.primaryColor)
-
+                
                 Text(animatedSubtitle)
                     .font(.custom("Poppins-Light", size: 14))
                     .lineLimit(3)
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color.theme.onSurfaceColor)
                     .transition(.opacity.combined(with: .move(edge: .bottom)))
-
+                
             }
             CustomButtonView(
                 buttonName:"Get Started",
                 onTap: {
-                    onGetStarted()
+                    if isLocationAuthorized {
+                        onGetStarted()
+                    }
+                    else {
+                        locationManager.requestWhenInUseAuthorization()
+                    }
                 }
             )
-
+            
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -59,8 +65,29 @@ struct LandingPageView: View {
                 )
             }
         }
-
-       
+        .onChange(of: locationManager.authorizationStatus) { newStatus in
+            Task {
+                if newStatus == .authorizedWhenInUse || newStatus == .authorizedAlways {
+                    isLocationAuthorized = true
+                    locationManager.startUpdatingLocation()
+                } else {
+                    isLocationAuthorized = false
+                }
+            }
+        }
+        .alert(isPresented: $locationManager.showLocationAlert) {
+            Alert(
+                title: Text("Location permision is required to proceed"),
+                message: Text("Please enable location access in settings to proceed."),
+                primaryButton: .default(Text("Open Settings")) {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url)
+                    }
+                },
+                secondaryButton: .cancel()
+            )
+        }
+        
     }
 }
 

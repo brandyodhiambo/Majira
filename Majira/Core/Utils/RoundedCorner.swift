@@ -2,7 +2,7 @@
 //  RoundedCorner.swift
 //  Majira
 //
-//  Created by MAC on 09/07/2025.
+//  Created by Brandy Odhiambo on 09/07/2025.
 //
 
 import SwiftUI
