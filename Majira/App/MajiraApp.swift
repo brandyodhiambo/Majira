@@ -2,7 +2,7 @@
 //  MajiraApp.swift
 //  Majira
 //
-//  Created by MAC on 02/07/2025.
+//  Created by Brandy Odhiambo on 02/07/2025.
 //
 
 import SwiftUI
