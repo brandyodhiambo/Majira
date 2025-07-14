@@ -12,7 +12,12 @@ struct HomeView: View {
     var themeToggleIcon: String {
         themesViewModel.currentTheme == .dark ? "sun.max.fill" : "moon.fill"
     }
+    @StateObject var locationManager = LocationManager()
+    @StateObject var homeViewModel: HomeViewModel = .init()
+    @State var weatherResponse: WeatherResponse?
+    @State private var locationName: String = "Loading..."
 
+    
 
     var body: some View {
         let now = Date()
@@ -22,12 +27,15 @@ struct HomeView: View {
             VStack(alignment:.leading,spacing:16){
                 // Upper Part
                 VStack(alignment:.center, spacing:16){
-                   LocationHeaderView(location: "Nairobi, Kenya")
+                   LocationHeaderView(location: locationName)
+                    
                    WeatherIconView(image: "sunRain", size: 150, weatherColor: Color.theme.sunnyYellow)
-                   Text("Tuesday, 8th July")
+                    
+                    Text("\(Utils.shared.formattedToday())")
                        .font(.custom("Poppins-Medium", size: 16))
                        .foregroundColor(.theme.onSurfaceColor)
-                   Text("29°C")
+                    
+                    Text("\(weatherResponse?.current.temp ?? 0.0)°C")
                        .font(.custom("Poppins-ExtraBold", size: 30))
                        .foregroundColor(Color.theme.onSurfaceColor.opacity(0.9))
                    
@@ -70,11 +78,35 @@ struct HomeView: View {
                         .padding()
                     }
                 }
+                .task{
+                    await homeViewModel.fetchWeaatherData(
+                        lat: locationManager.latitude.description,
+                        lon: "\(locationManager.longitude)",
+                        onSuccess:{ data in
+                            self.weatherResponse = data
+                        },
+                        onFailure: { error in
+                           print("Debug: Failed to fetch weather data: \(error)")
+                        }
+                    )
+                }
                 .padding()
                 
             }
         }
         .background(Color.theme.surfaceColor)
+        .overlay{
+            Group{
+                if homeViewModel.dataState == .isLoading{
+                    ZStack{
+                        Rectangle()
+                            .opacity(0.3)
+                            .foregroundColor(Color.black)
+                        ProgressView()
+                    }
+                }
+            }
+        }
         .customTopAppBar(
             title: "",
             leadingIcon: "",
@@ -89,6 +121,16 @@ struct HomeView: View {
         .onAppear {
             themesViewModel.setAppTheme()
         }
+        .onAppear {
+            Utils.shared.getCityAndCountry(latitude: locationManager.latitude, longitude: locationManager.longitude) { name in
+                if let name = name {
+                    locationName = name
+                } else {
+                    locationName = "Location not found"
+                }
+            }
+        }
+
        
     }
     
