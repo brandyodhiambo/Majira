@@ -29,7 +29,7 @@ struct HomeView: View {
                 VStack(alignment:.center, spacing:16){
                    LocationHeaderView(location: locationName)
                     
-                   WeatherIconView(image: "sunRain", size: 150, weatherColor: Color.theme.sunnyYellow)
+                    WeatherIconView(iconCode: weatherResponse?.current.weather[0].icon ?? "", size: 150)
                     
                     Text("\(Utils.shared.formattedToday())")
                        .font(.custom("Poppins-Medium", size: 16))
@@ -95,15 +95,18 @@ struct HomeView: View {
             }
         }
         .background(Color.theme.surfaceColor)
-        .overlay{
-            Group{
-                if homeViewModel.dataState == .isLoading{
-                    ZStack{
-                        Rectangle()
-                            .opacity(0.3)
-                            .foregroundColor(Color.black)
-                        ProgressView()
-                    }
+        .overlay {
+            if homeViewModel.dataState == .isLoading {
+                ZStack {
+                    Color.black.opacity(0.3)
+                        .ignoresSafeArea()
+
+                    ProgressView("Loading weather...")
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.theme.primaryColor.opacity(0.8))
+                        .cornerRadius(12)
                 }
             }
         }

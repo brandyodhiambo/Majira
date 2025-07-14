@@ -111,6 +111,43 @@ struct Utils {
         
         return "\(hours)h \(minutes)m"
     }
+    
+    
+
+    func weatherImage(for iconCode: String) -> Image {
+        let assetName: String
+        switch iconCode {
+        case "01d", "02d":                      // clear / few clouds day
+            assetName = "sun"
+            
+        case "03d", "04d", "03n", "04n", "02n": // scattered / broken clouds
+            assetName = "cloud"
+            
+        case "09d", "09n", "10n":               // shower rain / rain night
+            assetName = "rain"
+            
+        case "10d":                             // rain day (sun + rain)
+            assetName = "sunRain"
+            
+        case "11d", "11n":                      // thunderstorm
+            assetName = "thunder_lightning"
+            
+        case "13d", "13n":                      // snow
+            assetName = "snow"
+            
+        case "50d", "50n":                      // mist / fog
+            assetName = "fog"
+            
+        case "01n":                             // clear night
+            assetName = "clear"
+            
+        default:                                // fallback
+            assetName = "cloud"
+        }
+        
+        return Image(assetName)
+    }
+
 
 
 
