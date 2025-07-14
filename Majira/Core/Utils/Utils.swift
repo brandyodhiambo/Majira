@@ -99,6 +99,19 @@ struct Utils {
             }
         }
     }
+    
+    func calculateDaylightDuration(sunrise: Double, sunset: Double) -> String {
+        let sunriseDate = Date(timeIntervalSince1970: sunrise)
+        let sunsetDate = Date(timeIntervalSince1970: sunset)
+        
+        let duration = sunsetDate.timeIntervalSince(sunriseDate)
+        
+        let hours = Int(duration) / 3600
+        let minutes = (Int(duration) % 3600) / 60
+        
+        return "\(hours)h \(minutes)m"
+    }
+
 
 
 }

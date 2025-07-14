@@ -35,7 +35,7 @@ struct HomeView: View {
                        .font(.custom("Poppins-Medium", size: 16))
                        .foregroundColor(.theme.onSurfaceColor)
                     
-                    Text("\(weatherResponse?.current.temp ?? 0.0)°C")
+                    Text("\(String(format: "%.2f", weatherResponse?.current.temp ?? 0.0))°C")
                        .font(.custom("Poppins-ExtraBold", size: 30))
                        .foregroundColor(Color.theme.onSurfaceColor.opacity(0.9))
                    
@@ -43,15 +43,15 @@ struct HomeView: View {
                    HStack (spacing:12){
                        Spacer()
                        WeatherConditionView(
-                           icon: "wind", condition: "11km/h"
+                           icon: "wind", condition: "\(String(format: "%.2f", weatherResponse?.current.windSpeed ?? 0.0)) km/h"
                        )
                        Spacer()
                        WeatherConditionView(
-                           icon: "drop.fill", condition: "54%"
+                           icon: "drop.fill", condition: "\(weatherResponse?.current.humidity ?? 0)%"
                        )
                        Spacer()
                        WeatherConditionView(
-                           icon: "sun.max.fill", condition: "8hr"
+                        icon: "sun.max.fill", condition: Utils.shared.calculateDaylightDuration(sunrise: weatherResponse?.current.sunrise ?? 0.0, sunset: weatherResponse?.current.sunset ?? 0.0)
                        )
                        Spacer()
                    }
