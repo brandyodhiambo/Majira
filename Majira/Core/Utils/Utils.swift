@@ -169,6 +169,19 @@ struct Utils {
         default: return "cloud.fill"
         }
     }
+    
+
+    func weatherColor(for condition: String) -> Color {
+        switch condition.lowercased() {
+        case "rain": return .theme.rainColor
+        case "clear": return Color.orange
+        case "clouds" , "broken clouds": return .theme.cloudColor
+        case "snow": return Color.theme.snowColor
+        case "sun": return .theme.sunnyYellow
+        default: return Color.theme.primaryColor
+        }
+    }
+
 
 
 

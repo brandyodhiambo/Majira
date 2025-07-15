@@ -5,7 +5,7 @@
 //  Created by Brandy Odhiambo on 13/07/2025.
 //
 
-import Foundation
+import SwiftUI
 
 struct DailyWeather: Codable {
     let dt: TimeInterval
@@ -41,6 +41,34 @@ struct DailyWeather: Codable {
         case windGust = "wind_gust"
         case weather, clouds, pop, rain, uvi
     }
+
+
+    var day: String {
+        let date = Date(timeIntervalSince1970: dt)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE"
+        return formatter.string(from: date)
+    }
+
+    var dateString: String {
+        let date = Date(timeIntervalSince1970: dt)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "d MMM"
+        return formatter.string(from: date)
+    }
+
+    var iconName: String {
+        Utils.shared.mapIconToSFImage(icon: weather.first?.icon ?? "01d")
+    }
+
+    var temperatureString: String {
+        "\(Int(temp.max))° / \(Int(temp.min))°"
+    }
+
+    var weatherColor: Color {
+        Utils.shared.weatherColor(for: weather.first?.main ?? "")
+    }
 }
+
 
 

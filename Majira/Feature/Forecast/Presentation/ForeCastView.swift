@@ -16,6 +16,10 @@ struct ForeCastView: View {
     var themeToggleIcon: String {
         themesViewModel.currentTheme == .dark ? "sun.max.fill" : "moon.fill"
     }
+    var dailyForecasts: [DailyWeather] {
+        weatherResponse?.daily ?? []
+    }
+    
     @State var sampleForecaset: [ForeCastItem] = [
         ForeCastItem(day: "Wednesday", date: "25 July", temperature: "23°", iconName: "sun.max.fill", weatherColor: .theme.sunnyYellow),
         ForeCastItem(day: "Thursday", date: "26 July", temperature: "24°", iconName: "cloud.sun.fill", weatherColor: .theme.cloudColor),
@@ -56,14 +60,14 @@ struct ForeCastView: View {
                     .font(.custom("Poppins-Medium", size: 16))
                     .foregroundColor(.theme.onSurfaceColor.opacity(0.8))
                 
-                ScrollView(.vertical,showsIndicators: false){
+                ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 12) {
-                        ForEach(sampleForecaset, id: \.day) { forecast in
+                        ForEach(dailyForecasts, id: \.dt) { forecast in
                             ForecastRowView(
                                 day: forecast.day,
-                                date: forecast.date,
+                                date: forecast.dateString,
                                 icon: forecast.iconName,
-                                temperature: forecast.temperature,
+                                temperature: forecast.temperatureString,
                                 weatherColor: forecast.weatherColor
                             )
                         }
