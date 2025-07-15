@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		043D5DB42E264AC000B3F160 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 043D5DB32E264AC000B3F160 /* Lottie */; };
 		047393D82E1658C900E66C37 /* Poppins-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 047393C62E1658C900E66C37 /* Poppins-Black.ttf */; };
 		047393D92E1658C900E66C37 /* Poppins-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 047393D02E1658C900E66C37 /* Poppins-LightItalic.ttf */; };
 		047393DA2E1658C900E66C37 /* Poppins-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 047393CB2E1658C900E66C37 /* Poppins-ExtraBoldItalic.ttf */; };
@@ -104,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				043D5DB42E264AC000B3F160 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,6 +184,7 @@
 			);
 			name = Majira;
 			packageProductDependencies = (
+				043D5DB32E264AC000B3F160 /* Lottie */,
 			);
 			productName = Majira;
 			productReference = 047CE3772E14FBF80021B240 /* Majira.app */;
@@ -265,6 +268,9 @@
 			);
 			mainGroup = 047CE36E2E14FBF80021B240;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				043D5DB22E264AC000B3F160 /* XCRemoteSwiftPackageReference "lottie-spm" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 047CE3782E14FBF80021B240 /* Products */;
 			projectDirPath = "";
@@ -650,6 +656,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		043D5DB22E264AC000B3F160 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		043D5DB32E264AC000B3F160 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 043D5DB22E264AC000B3F160 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 047CE36F2E14FBF80021B240 /* Project object */;
 }

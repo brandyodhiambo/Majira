@@ -49,19 +49,6 @@ struct ForeCastView: View {
                     .padding()
                 }
             }
-            .task{
-                await homeViewModel.fetchWeaatherData(
-                    lat: locationManager.latitude.description,
-                    lon: "\(locationManager.longitude)",
-                    onSuccess:{ data in
-                        self.weatherResponse = data
-                        self.hourlyForecasts = data.hourly
-                    },
-                    onFailure: { error in
-                       print("Debug: Failed to fetch weather data: \(error)")
-                    }
-                )
-            }
             .padding([.top, .leading], 12)
             
             VStack(alignment:.leading, spacing:16){
@@ -87,19 +74,31 @@ struct ForeCastView: View {
         }
         .background(Color.theme.surfaceColor)
         .overlay {
-            if homeViewModel.dataState == .isLoading {
-                ZStack {
-                    Color.black.opacity(0.3)
-                        .ignoresSafeArea()
+            Group {
+                if homeViewModel.dataState == .isLoading {
+                    ZStack {
+                        Rectangle()
+                            .foregroundColor(.black.opacity(0.3))
+                            .ignoresSafeArea()
 
-                    ProgressView("Loading weather...")
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.theme.primaryColor.opacity(0.8))
-                        .cornerRadius(12)
+                        LottieView(animationName: "flying-weather")
+                            .frame(width: 70, height: 70)
+                    }
                 }
             }
+        }
+        .task{
+            await homeViewModel.fetchWeaatherData(
+                lat: locationManager.latitude.description,
+                lon: "\(locationManager.longitude)",
+                onSuccess:{ data in
+                    self.weatherResponse = data
+                    self.hourlyForecasts = data.hourly
+                },
+                onFailure: { error in
+                   print("Debug: Failed to fetch weather data: \(error)")
+                }
+            )
         }
         .customTopAppBar(
             title: "Forecast Report",

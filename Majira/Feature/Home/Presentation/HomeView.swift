@@ -99,20 +99,20 @@ struct HomeView: View {
         }
         .background(Color.theme.surfaceColor)
         .overlay {
-            if homeViewModel.dataState == .isLoading {
-                ZStack {
-                    Color.black.opacity(0.3)
-                        .ignoresSafeArea()
+            Group {
+                if homeViewModel.dataState == .isLoading {
+                    ZStack {
+                        Rectangle()
+                            .foregroundColor(.black.opacity(0.3))
+                            .ignoresSafeArea()
 
-                    ProgressView("Loading weather...")
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.theme.primaryColor.opacity(0.8))
-                        .cornerRadius(12)
+                        LottieView(animationName: "flying-weather") 
+                            .frame(width: 70, height: 70)
+                    }
                 }
             }
         }
+
         .customTopAppBar(
             title: "",
             leadingIcon: "",

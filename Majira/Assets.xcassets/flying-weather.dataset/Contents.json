@@ -1,0 +1,12 @@
+{
+  "data" : [
+    {
+      "filename" : "flying-weather.json",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
