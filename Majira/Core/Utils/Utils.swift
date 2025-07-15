@@ -120,7 +120,7 @@ struct Utils {
         case "02n":
             assetName = "partlyCloudy"       // few clouds night
         case "02d":                             // few clouds day
-            assetName = "SunCloud"
+            assetName = "sunCloud"
         case "01d":                      // clear / few clouds day
             assetName = "sun"
         case "03d", "04d", "03n", "04n":  // scattered / broken clouds

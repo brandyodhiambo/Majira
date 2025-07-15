@@ -21,26 +21,24 @@ struct HomeView: View {
     
 
     var body: some View {
-        ZStack{
-            if homeViewModel.dataState == .isLoading {
-                LottieView(animationName: "flying-weather")
-                    .frame(width: 70, height: 70)
-            }
-        }
         ScrollView(.vertical,showsIndicators: false){
-            VStack(alignment:.leading,spacing:16){
+            VStack(alignment:.leading,spacing:12){
                 // Upper Part
-                VStack(alignment:.center, spacing:16){
+                VStack(alignment:.center, spacing:8){
                    LocationHeaderView(location: locationName)
                     
                     WeatherIconView(iconCode: weatherResponse?.current.weather[0].icon ?? "", size: 150)
-                    
-                    Text("\(Utils.shared.formattedToday())")
-                       .font(.custom("Poppins-Medium", size: 16))
+            
+                    Text(weatherResponse?.current.weather[0].description ?? "")
+                       .font(.custom("Poppins-ExtraBold", size: 30))
                        .foregroundColor(.theme.onSurfaceColor)
                     
-                    Text("\(String(format: "%.2f", weatherResponse?.current.temp ?? 0.0))°C")
-                       .font(.custom("Poppins-ExtraBold", size: 30))
+                    Text("\(Utils.shared.formattedToday())")
+                       .font(.custom("Poppins-Bold", size: 20))
+                       .foregroundColor(.theme.onSurfaceColor)
+                    
+                    Text("\(String(format: "%.2f", weatherResponse?.current.temp ?? 0.0))°")
+                       .font(.custom("Poppins-Bold", size: 20))
                        .foregroundColor(Color.theme.onSurfaceColor.opacity(0.9))
                    
                    // weather condition
@@ -59,12 +57,14 @@ struct HomeView: View {
                        )
                        Spacer()
                    }
+                   .padding()
                 }
                 
                 VStack(alignment:.leading, spacing:16){
                     Text("Hourly Forecast")
                         .font(.custom("Poppins-Medium", size: 16))
                         .foregroundColor(.theme.onSurfaceColor.opacity(0.7))
+                        .padding()
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 12) {
@@ -86,24 +86,42 @@ struct HomeView: View {
                     }
 
                 }
-                .task{
-                    await homeViewModel.fetchWeaatherData(
-                        lat: locationManager.latitude.description,
-                        lon: "\(locationManager.longitude)",
-                        onSuccess:{ data in
-                            self.weatherResponse = data
-                            self.hourlyForecasts = data.hourly
-                        },
-                        onFailure: { error in
-                           print("Debug: Failed to fetch weather data: \(error)")
-                        }
-                    )
-                }
-                .padding()
-                
+                            
             }
         }
         .background(Color.theme.surfaceColor)
+        .task{
+            await homeViewModel.fetchWeaatherData(
+                lat: locationManager.latitude.description,
+                lon: "\(locationManager.longitude)",
+                onSuccess:{ data in
+                    self.weatherResponse = data
+                    self.hourlyForecasts = data.hourly
+                },
+                onFailure: { error in
+                   print("Debug: Failed to fetch weather data: \(error)")
+                }
+            )
+        }
+        .overlay {
+            switch homeViewModel.dataState {
+            case .isLoading:
+                LoadingOverlay()
+            case .error(let error):
+                ErrorOverlay(message: error) {
+                    Task {
+                        await homeViewModel.fetchWeaatherData(
+                            lat: "\(locationManager.latitude)",
+                            lon: "\(locationManager.longitude)",
+                            onSuccess: { data in self.weatherResponse = data },
+                            onFailure: { print("Error: \($0)") }
+                        )
+                    }
+                }
+            default:
+                EmptyView()
+            }
+        }
         .customTopAppBar(
             title: "",
             leadingIcon: "",
@@ -117,8 +135,6 @@ struct HomeView: View {
         )
         .onAppear {
             themesViewModel.setAppTheme()
-        }
-        .onAppear {
             Utils.shared.getCityAndCountry(latitude: locationManager.latitude, longitude: locationManager.longitude) { name in
                 if let name = name {
                     locationName = name
@@ -127,6 +143,7 @@ struct HomeView: View {
                 }
             }
         }
+        
 
        
     }
