@@ -9,6 +9,10 @@ import SwiftUI
 
 struct ForeCastView: View {
     @EnvironmentObject var themesViewModel: ThemesViewModel
+    @StateObject var homeViewModel: HomeViewModel = .init()
+    @StateObject var locationManager = LocationManager()
+    @State var weatherResponse: WeatherResponse?
+    @State var hourlyForecasts: [HourlyForecast] = []
     var themeToggleIcon: String {
         themesViewModel.currentTheme == .dark ? "sun.max.fill" : "moon.fill"
     }
@@ -17,9 +21,9 @@ struct ForeCastView: View {
         ForeCastItem(day: "Thursday", date: "26 July", temperature: "24°", iconName: "cloud.sun.fill", weatherColor: .theme.cloudColor),
         ForeCastItem(day: "Friday", date: "27 July", temperature: "20°", iconName: "cloud.rain.fill", weatherColor: .theme.rainColor),
     ]
+    
     var body: some View {
-        let now = Date()
-        let hours = (-2...2).map { Calendar.current.date(byAdding: .hour, value: $0, to: now)! }
+
         VStack(spacing:16){
             VStack(alignment:.leading, spacing:16){
                 Text("Today's Forecast")
@@ -28,19 +32,35 @@ struct ForeCastView: View {
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 12) {
-                        ForEach(hours, id: \.self) { hour in
-                            let isNow = Calendar.current.component(.hour, from: hour) == Calendar.current.component(.hour, from: now)
+                        ForEach(hourlyForecasts, id: \.dt) { forecast in
+                            let forecastDate = Date(timeIntervalSince1970: forecast.dt)
+                            let currentHour = Calendar.current.component(.hour, from: Date())
+                            let forecastHour = Calendar.current.component(.hour, from: forecastDate)
+                            let isNow = currentHour == forecastHour
                             
                             TemperatureCard(
-                                temperature: "\(Int.random(in: 22...28))°",
-                                iconName: isNow ? "sun.max.fill" : "cloud.sun.fill",
-                                date: hour,
+                                temperature: "\(Int(forecast.temp))°",
+                                iconName: Utils.shared.mapIconToSFImage(icon: forecast.weather.first?.icon ?? "01d"),
+                                date: forecastDate,
                                 isSelected: isNow
                             )
                         }
                     }
                     .padding()
                 }
+            }
+            .task{
+                await homeViewModel.fetchWeaatherData(
+                    lat: locationManager.latitude.description,
+                    lon: "\(locationManager.longitude)",
+                    onSuccess:{ data in
+                        self.weatherResponse = data
+                        self.hourlyForecasts = data.hourly
+                    },
+                    onFailure: { error in
+                       print("Debug: Failed to fetch weather data: \(error)")
+                    }
+                )
             }
             .padding([.top, .leading], 12)
             
@@ -66,6 +86,21 @@ struct ForeCastView: View {
             .padding([.top, .leading,.bottom], 12)
         }
         .background(Color.theme.surfaceColor)
+        .overlay {
+            if homeViewModel.dataState == .isLoading {
+                ZStack {
+                    Color.black.opacity(0.3)
+                        .ignoresSafeArea()
+
+                    ProgressView("Loading weather...")
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.theme.primaryColor.opacity(0.8))
+                        .cornerRadius(12)
+                }
+            }
+        }
         .customTopAppBar(
             title: "Forecast Report",
             leadingIcon: "",
