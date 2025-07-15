@@ -21,6 +21,12 @@ struct HomeView: View {
     
 
     var body: some View {
+        ZStack{
+            if homeViewModel.dataState == .isLoading {
+                LottieView(animationName: "flying-weather")
+                    .frame(width: 70, height: 70)
+            }
+        }
         ScrollView(.vertical,showsIndicators: false){
             VStack(alignment:.leading,spacing:16){
                 // Upper Part
@@ -98,21 +104,6 @@ struct HomeView: View {
             }
         }
         .background(Color.theme.surfaceColor)
-        .overlay {
-            Group {
-                if homeViewModel.dataState == .isLoading {
-                    ZStack {
-                        Rectangle()
-                            .foregroundColor(.black.opacity(0.3))
-                            .ignoresSafeArea()
-
-                        LottieView(animationName: "flying-weather") 
-                            .frame(width: 70, height: 70)
-                    }
-                }
-            }
-        }
-
         .customTopAppBar(
             title: "",
             leadingIcon: "",
