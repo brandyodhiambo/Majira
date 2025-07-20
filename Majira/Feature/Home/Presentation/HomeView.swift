@@ -29,16 +29,16 @@ struct HomeView: View {
                     
                     WeatherIconView(iconCode: weatherResponse?.current.weather[0].icon ?? "", size: 150)
             
-                    Text(weatherResponse?.current.weather[0].description ?? "")
+                    Text(weatherResponse?.current.weather[0].description.uppercased() ?? "")
                        .font(.custom("Poppins-ExtraBold", size: 30))
                        .foregroundColor(.theme.onSurfaceColor)
                     
                     Text("\(Utils.shared.formattedToday())")
-                       .font(.custom("Poppins-Bold", size: 20))
+                       .font(.custom("Poppins-Bold", size: 18))
                        .foregroundColor(.theme.onSurfaceColor)
                     
                     Text("\(String(format: "%.2f", weatherResponse?.current.temp ?? 0.0))°")
-                       .font(.custom("Poppins-Bold", size: 20))
+                       .font(.custom("Poppins-Bold", size: 18))
                        .foregroundColor(Color.theme.onSurfaceColor.opacity(0.9))
                    
                    // weather condition

@@ -12,28 +12,30 @@ struct ErrorOverlay: View {
 
     var body: some View {
         ZStack {
-            Rectangle()
-                .foregroundColor(.black.opacity(0.4))
-                .ignoresSafeArea()
 
             VStack(spacing: 16) {
                 Text("Oops!")
                     .font(.title)
                     .bold()
-                    .foregroundColor(.white)
+                    .foregroundColor(.theme.onSurfaceColor)
                 Text(message)
-                    .foregroundColor(.white)
+                    .foregroundColor(.theme.onSurfaceColor)
                     .multilineTextAlignment(.center)
 
                 Button(action: onRetry) {
                     Text("Retry")
-                        .foregroundColor(.black)
+                        .foregroundColor(.theme.onPrimaryColor)
                         .padding(.horizontal, 24)
                         .padding(.vertical, 12)
-                        .background(Color.white)
+                        .background(Color.theme.primaryColor)
                         .cornerRadius(8)
                 }
             }
+            .padding()
+            .background(Color.theme.surfaceColor)
+            .cornerRadius(12)
+            .shadow(radius: 20)
+            .frame(maxWidth: UIScreen.main.bounds.width * 0.95)
             .padding()
         }
     }

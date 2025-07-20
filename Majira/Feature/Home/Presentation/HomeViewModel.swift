@@ -29,7 +29,7 @@ class HomeViewModel:ObservableObject{
             print("DEBUG: fetched Weather: \(response.current), daily count \(response.daily.count)" )
         case .failure(let error):
             dataState = .error(error.description)
-            print("DEBUG: fetched failed chef: \(error.description)" )
+            print("DEBUG: fetched failed weather: \(error.description)" )
             onFailure(error.localizedDescription)
         }
     }

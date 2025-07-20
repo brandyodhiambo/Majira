@@ -78,17 +78,22 @@ struct ForeCastView: View {
         }
         .background(Color.theme.surfaceColor)
         .overlay {
-            Group {
-                if homeViewModel.dataState == .isLoading {
-                    ZStack {
-                        Rectangle()
-                            .foregroundColor(.black.opacity(0.3))
-                            .ignoresSafeArea()
-
-                        LottieView(animationName: "flying-weather")
-                            .frame(width: 70, height: 70)
+            switch homeViewModel.dataState {
+            case .isLoading:
+                LoadingOverlay()
+            case .error(let error):
+                ErrorOverlay(message: error) {
+                    Task {
+                        await homeViewModel.fetchWeaatherData(
+                            lat: "\(locationManager.latitude)",
+                            lon: "\(locationManager.longitude)",
+                            onSuccess: { data in self.weatherResponse = data },
+                            onFailure: { print("Error: \($0)") }
+                        )
                     }
                 }
+            default:
+                EmptyView()
             }
         }
         .task{
