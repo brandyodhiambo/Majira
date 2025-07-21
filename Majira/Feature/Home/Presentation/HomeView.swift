@@ -133,9 +133,20 @@ struct HomeView: View {
                 themesViewModel.changeTheme(to: nextTheme)
             }
         )
+        .onChange(of: locationManager.latitude) { newValue in
+            updateLocationNameIfNeeded()
+        }
         .onAppear {
             themesViewModel.setAppTheme()
-            Utils.shared.getCityAndCountry(latitude: locationManager.latitude, longitude: locationManager.longitude) { name in
+            updateLocationNameIfNeeded()
+        }
+    }
+    
+    
+    func updateLocationNameIfNeeded() {
+        guard locationManager.latitude != 0.0 && locationManager.longitude != 0.0 else { return }
+        Utils.shared.getCityAndCountry(latitude: locationManager.latitude, longitude: locationManager.longitude) { name in
+            DispatchQueue.main.async {
                 if let name = name {
                     locationName = name
                 } else {
@@ -143,11 +154,8 @@ struct HomeView: View {
                 }
             }
         }
-        
-
-       
     }
-    
+
     
 }
 
