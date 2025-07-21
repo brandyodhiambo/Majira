@@ -15,12 +15,12 @@ struct CityView: View {
     }
 
     @State var text: String = ""
-    @State var sampleCities: [City] = [
-        City(cityName: "Nairobi", temperature: "23°C", iconName: "sun.max.fill",condition: "Sunny",weatherColor: .theme.sunnyYellow),
-        City(cityName: "Mombasa", temperature: "29°C", iconName: "cloud.sun.fill",condition: "Sunny", weatherColor: .theme.cloudColor),
-        City(cityName: "Kisumu", temperature: "26°C", iconName: "cloud.rain.fill",condition: "Sunny", weatherColor: .theme.rainColor),
-        City(cityName: "Eldoret", temperature: "19°C", iconName: "cloud.fog.fill", condition: "Sunny",weatherColor: .theme.snowColor),
-        City(cityName: "Nakuru", temperature: "21°C", iconName: "cloud.sun.fill",condition: "Sunny", weatherColor: .mint)
+    @State var sampleCities: [CityWeather] = [
+        CityWeather(cityName: "Nairobi", temperature: "23°C", iconName: "sun.max.fill",condition: "Sunny",weatherColor: .theme.sunnyYellow),
+        CityWeather(cityName: "Mombasa", temperature: "29°C", iconName: "cloud.sun.fill",condition: "Sunny", weatherColor: .theme.cloudColor),
+        CityWeather(cityName: "Kisumu", temperature: "26°C", iconName: "cloud.rain.fill",condition: "Sunny", weatherColor: .theme.rainColor),
+        CityWeather(cityName: "Eldoret", temperature: "19°C", iconName: "cloud.fog.fill", condition: "Sunny",weatherColor: .theme.snowColor),
+        CityWeather(cityName: "Nakuru", temperature: "21°C", iconName: "cloud.sun.fill",condition: "Sunny", weatherColor: .mint)
     ]
     
     var body: some View {

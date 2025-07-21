@@ -10,7 +10,7 @@ import SwiftUI
 struct CityWeatherDetailsView: View {
     @EnvironmentObject var router:Router
     
-    let city: City
+    let city: CityWeather
     var body: some View {
         let now = Date()
         let hours = (-2...2).map { Calendar.current.date(byAdding: .hour, value: $0, to: now)! }

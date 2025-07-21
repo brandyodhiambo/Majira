@@ -112,6 +112,30 @@ struct Utils {
         return "\(hours)h \(minutes)m"
     }
     
+    func getLatLon(from cityName: String, completion: @escaping (CLLocationCoordinate2D?) -> Void) {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(cityName) { placemarks, error in
+            if let error = error {
+                print("Geocoding failed: \(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    let toast = UIAlertController(title: nil, message: "Unknown Location", preferredStyle: .alert)
+                    UIApplication.shared.windows.first?.rootViewController?.present(toast, animated: true)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        toast.dismiss(animated: true)
+                    }
+                }
+                completion(nil)
+                return
+            }
+
+            if let coordinate = placemarks?.first?.location?.coordinate {
+                completion(coordinate)
+            } else {
+                completion(nil)
+            }
+        }
+    }
+    
     
 
     func weatherImage(for iconCode: String) -> Image {
