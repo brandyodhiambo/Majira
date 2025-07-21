@@ -20,12 +20,6 @@ struct ForeCastView: View {
         weatherResponse?.daily ?? []
     }
     
-    @State var sampleForecaset: [ForeCastItem] = [
-        ForeCastItem(day: "Wednesday", date: "25 July", temperature: "23°", iconName: "sun.max.fill", weatherColor: .theme.sunnyYellow),
-        ForeCastItem(day: "Thursday", date: "26 July", temperature: "24°", iconName: "cloud.sun.fill", weatherColor: .theme.cloudColor),
-        ForeCastItem(day: "Friday", date: "27 July", temperature: "20°", iconName: "cloud.rain.fill", weatherColor: .theme.rainColor),
-    ]
-    
     var body: some View {
 
         VStack(spacing:16){

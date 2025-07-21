@@ -113,7 +113,7 @@ struct CityWeatherDetailsView: View {
 #Preview {
     NavigationView {
         CityWeatherDetailsView(
-            city:City.preview
+            city:CityWeather.preview
         )
     }
 }

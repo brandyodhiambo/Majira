@@ -28,6 +28,7 @@ struct InputFieldView: View {
     var inputFieldStyle: InputFieldStyle = InputFieldStyle.outlined
     var cornerRadius: CGFloat = 12
     var height: CGFloat = 44
+    var onSubmit: (() -> Void)? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -44,6 +45,10 @@ struct InputFieldView: View {
                     .foregroundColor(foregroundColor)
                     .keyboardType(keyboardType)
                     .autocapitalization(autoCapitalization)
+                    .submitLabel(.done)
+                    .onSubmit {
+                        onSubmit?()
+                    }
                     .padding(.vertical, 6)
                 
                 if !image.isEmpty {
@@ -111,7 +116,10 @@ struct InputFieldViewPreview: View {
                 text: $text,
                 foregroundColor: .black,
                 backgroundColor: Color.gray.opacity(0.1),
-                inputFieldStyle: .outlined
+                inputFieldStyle: .outlined,
+                onSubmit: {
+                    
+                }
             )
 
             InputFieldView(
