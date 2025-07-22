@@ -21,16 +21,6 @@ struct CityView: View {
 
 
     
-    @State var sampleCities: [CityWeather] = [
-        CityWeather(cityName: "Nairobi", temperature: "23°C", iconName: "sun.max.fill",condition: "Sunny",weatherColor: .theme.sunnyYellow),
-        CityWeather(cityName: "Mombasa", temperature: "29°C", iconName: "cloud.sun.fill",condition: "Sunny", weatherColor: .theme.cloudColor),
-        CityWeather(cityName: "Kisumu", temperature: "26°C", iconName: "cloud.rain.fill",condition: "Sunny", weatherColor: .theme.rainColor),
-        CityWeather(cityName: "Eldoret", temperature: "19°C", iconName: "cloud.fog.fill", condition: "Sunny",weatherColor: .theme.snowColor),
-        CityWeather(cityName: "Nakuru", temperature: "21°C", iconName: "cloud.sun.fill",condition: "Sunny", weatherColor: .mint)
-    ]
-   
-
-    
     var body: some View {
         let router = tabRouter.cityRouter
         VStack(alignment:.leading,spacing:16){
@@ -110,7 +100,7 @@ struct CityView: View {
                     let current = response.current
                     let cityWeather = CityWeather(
                         cityName: city.city,
-                        temperature: "\(Int(current.temp))°C",
+                        temperature: Utils.shared.kelvinToCelsiusString(current.temp),
                         iconName: Utils.shared.mapIconToSFImage(icon: current.weather.first?.icon ?? ""),
                         condition: current.weather.first?.description.capitalized ?? "Unknown",
                         weatherColor: Utils.shared.weatherColor(for: current.weather.first?.main ?? "")

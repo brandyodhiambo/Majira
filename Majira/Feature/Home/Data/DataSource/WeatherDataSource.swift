@@ -41,6 +41,7 @@ struct WeatherDataSource {
             print("DEBUG: fetchweather decoding error \(decodingError)")
             return .failure(NetworkError.custom("We are unable to fetch weather data, kindly try again."))
         } catch {
+            print("Request failed: \(error)")
             return .failure(NetworkError.custom("We are unable to fetch weather data, kindly try again."))
         }
         

@@ -30,14 +30,14 @@ struct HomeView: View {
                     WeatherIconView(iconCode: weatherResponse?.current.weather[0].icon ?? "", size: 150)
             
                     Text(weatherResponse?.current.weather[0].description.uppercased() ?? "")
-                       .font(.custom("Poppins-ExtraBold", size: 30))
+                       .font(.custom("Poppins-ExtraBold", size: 25))
                        .foregroundColor(.theme.onSurfaceColor)
                     
                     Text("\(Utils.shared.formattedToday())")
                        .font(.custom("Poppins-Bold", size: 18))
                        .foregroundColor(.theme.onSurfaceColor)
                     
-                    Text("\(String(format: "%.2f", weatherResponse?.current.temp ?? 0.0))°")
+                    Text(Utils.shared.kelvinToCelsiusString(weatherResponse?.current.temp ?? 0.0))
                        .font(.custom("Poppins-Bold", size: 18))
                        .foregroundColor(Color.theme.onSurfaceColor.opacity(0.9))
                    
@@ -75,10 +75,11 @@ struct HomeView: View {
                                 let isNow = currentHour == forecastHour
                                 
                                 TemperatureCard(
-                                    temperature: "\(Int(forecast.temp))°",
+                                    temperature: Utils.shared.kelvinToCelsiusString(forecast.temp),
                                     iconName: Utils.shared.mapIconToSFImage(icon: forecast.weather.first?.icon ?? "01d"),
                                     date: forecastDate,
-                                    isSelected: isNow
+                                    isSelected: isNow,
+                                    weatherColor: Utils.shared.weatherColor(for: forecast.weather.first?.main ?? "")
                                 )
                             }
                         }
@@ -96,7 +97,7 @@ struct HomeView: View {
                 lon: "\(locationManager.longitude)",
                 onSuccess:{ data in
                     self.weatherResponse = data
-                    self.hourlyForecasts = data.hourly
+                    self.hourlyForecasts = data.hourly ?? []
                 },
                 onFailure: { error in
                    print("Debug: Failed to fetch weather data: \(error)")

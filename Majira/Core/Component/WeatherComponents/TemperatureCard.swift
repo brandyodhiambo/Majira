@@ -12,6 +12,7 @@ struct TemperatureCard: View {
     let iconName: String
     let date: Date
     var isSelected: Bool = false
+    var weatherColor:Color = Color.theme.onSurfaceColor.opacity(0.7)
 
     var body: some View {
         VStack(spacing: 4) {
@@ -19,10 +20,10 @@ struct TemperatureCard: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 40, height: 40)
-                .foregroundColor(isSelected ? Color.theme.onPrimaryColor : Color.theme.onSurfaceColor.opacity(0.7))
+                .foregroundColor(weatherColor)
 
             Text(temperature)
-                .font(.custom("Poppins-ExtraBold", size: 30))
+                .font(.custom("Poppins-ExtraBold", size: 20))
                 .foregroundColor(isSelected ? Color.theme.onPrimaryColor : Color.theme.onSurfaceColor.opacity(0.9))
 
             Spacer(minLength: 2)

@@ -37,10 +37,11 @@ struct ForeCastView: View {
                             let isNow = currentHour == forecastHour
                             
                             TemperatureCard(
-                                temperature: "\(Int(forecast.temp))°",
+                                temperature: Utils.shared.kelvinToCelsiusString(forecast.temp),
                                 iconName: Utils.shared.mapIconToSFImage(icon: forecast.weather.first?.icon ?? "01d"),
                                 date: forecastDate,
-                                isSelected: isNow
+                                isSelected: isNow,
+                                weatherColor: Utils.shared.weatherColor(for: forecast.weather.first?.main ?? "")
                             )
                         }
                     }
@@ -96,7 +97,7 @@ struct ForeCastView: View {
                 lon: "\(locationManager.longitude)",
                 onSuccess:{ data in
                     self.weatherResponse = data
-                    self.hourlyForecasts = data.hourly
+                    self.hourlyForecasts = data.hourly ?? []
                 },
                 onFailure: { error in
                    print("Debug: Failed to fetch weather data: \(error)")

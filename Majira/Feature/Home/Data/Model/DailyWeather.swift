@@ -62,7 +62,7 @@ struct DailyWeather: Codable {
     }
 
     var temperatureString: String {
-        "\(Int(temp.max))° / \(Int(temp.min))°"
+        "\(Utils.shared.kelvinToCelsiusString(temp.max)) / \(Utils.shared.kelvinToCelsiusString(temp.min))"
     }
 
     var weatherColor: Color {

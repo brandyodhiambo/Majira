@@ -13,9 +13,9 @@ struct WeatherResponse: Codable {
     let timezone: String
     let timezoneOffset: Int
     let current: CurrentWeather
-    let minutely: [MinutelyForecast]
-    let hourly: [HourlyForecast]
-    let daily: [DailyWeather]
+    var minutely: [MinutelyForecast]? = nil
+    var hourly: [HourlyForecast]? = nil
+    let daily: [DailyWeather]? = nil
 
     enum CodingKeys: String, CodingKey {
         case lat, lon, timezone

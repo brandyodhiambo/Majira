@@ -45,6 +45,11 @@ struct Utils {
         }
     }
     
+    func kelvinToCelsiusString(_ kelvin: Double) -> String {
+        let celsius = kelvin - 273.15
+        return String(format: "%.1f°C", celsius)
+    }
+    
     func formattedToday() -> String {
         let today = Date()
         let calendar = Calendar.current
