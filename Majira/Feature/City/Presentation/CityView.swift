@@ -18,7 +18,7 @@ struct CityView: View {
     @StateObject var cityViewModel:CityViewModel = .init()
     @StateObject var homeViewModel: HomeViewModel = .init()
     @State var cityWeatherList: [CityWeather] = []
-
+    @State private var fetchedCityNames: Set<String> = []
 
     
     var body: some View {
@@ -85,11 +85,14 @@ struct CityView: View {
     }
     
     private func fetchAllStoredCitiesWeather() {
-          cityWeatherList = []
-          for city in cityViewModel.cities {
-              fetchCityWeather(city: city)
-          }
-      }
+        cityWeatherList = []
+        for city in cityViewModel.cities {
+            if !fetchedCityNames.contains(city.city) {
+                fetchedCityNames.insert(city.city)
+                fetchCityWeather(city: city)
+            }
+        }
+    }
 
     private func fetchCityWeather(city: City) {
         Task {
@@ -103,6 +106,9 @@ struct CityView: View {
                         temperature: Utils.shared.kelvinToCelsiusString(current.temp),
                         iconName: Utils.shared.mapIconToSFImage(icon: current.weather.first?.icon ?? ""),
                         condition: current.weather.first?.description.capitalized ?? "Unknown",
+                        sunDuration: Utils.shared.calculateDaylightDuration(sunrise: current.sunrise,sunset:current.sunset),
+                        humidity: "\(Int(current.humidity))",
+                        windSpeed: "\(current.windSpeed)",
                         weatherColor: Utils.shared.weatherColor(for: current.weather.first?.main ?? "")
                     )
                     Task { @MainActor in

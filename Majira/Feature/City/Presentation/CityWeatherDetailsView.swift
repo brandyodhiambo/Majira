@@ -46,15 +46,15 @@ struct CityWeatherDetailsView: View {
                HStack (spacing:12){
                    Spacer()
                    WeatherConditionView(
-                       icon: "wind", condition: "11km/h"
+                    icon: "wind", condition: "\(city.windSpeed)km/h"
                    )
                    Spacer()
                    WeatherConditionView(
-                       icon: "drop.fill", condition: "54%"
+                    icon: "drop.fill", condition: "\(city.humidity)%"
                    )
                    Spacer()
                    WeatherConditionView(
-                       icon: "sun.max.fill", condition: "8hr"
+                    icon: "sun.max.fill", condition: "\(city.sunDuration)hr"
                    )
                    Spacer()
                }

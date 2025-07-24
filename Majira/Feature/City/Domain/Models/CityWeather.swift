@@ -14,6 +14,9 @@ struct CityWeather: Hashable, Equatable {
     let temperature: String
     let iconName: String
     let condition: String
+    let sunDuration: String
+    let humidity: String
+    let windSpeed: String
     let weatherColor:Color
 }
 
@@ -23,6 +26,9 @@ extension CityWeather {
         temperature: "25°C",
         iconName: "sun.max.fill",
         condition: "Sunny",
+        sunDuration: "12:00 - 18:00",
+        humidity: "60",
+        windSpeed: "10",
         weatherColor: .theme.sunnyYellow
     )
 }
