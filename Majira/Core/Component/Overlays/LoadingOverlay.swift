@@ -16,7 +16,7 @@ struct LoadingOverlay: View {
                 .ignoresSafeArea()
 
             LottieView(animationName: "flying-weather")
-                .frame(width: 150, height: 150)
+                .frame(width: 70, height: 70)
         }
     }
 }

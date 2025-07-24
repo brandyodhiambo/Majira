@@ -13,13 +13,10 @@ struct CityView: View {
     var themeToggleIcon: String {
         themesViewModel.currentTheme == .dark ? "sun.max.fill" : "moon.fill"
     }
-
+    
     @State var text: String = ""
     @StateObject var cityViewModel:CityViewModel = .init()
-    @StateObject var homeViewModel: HomeViewModel = .init()
-    @State var cityWeatherList: [CityWeather] = []
-    @State private var fetchedCityNames: Set<String> = []
-
+    
     
     var body: some View {
         let router = tabRouter.cityRouter
@@ -35,6 +32,7 @@ struct CityView: View {
                             print("Latitude: \(coordinate.latitude), Longitude: \(coordinate.longitude)")
                             let city = City(id: UUID(), city: text, latitude: coordinate.latitude, longitude: coordinate.longitude)
                             cityViewModel.addCity(city: city)
+                            text = ""
                         } else {
                             print("Failed to get coordinates.")
                         }
@@ -46,19 +44,41 @@ struct CityView: View {
                 .font(.custom("Poppins-Medium", size: 16))
                 .foregroundColor(.theme.onSurfaceColor.opacity(0.7))
             
-            ScrollView(.vertical,showsIndicators: false){
-                VStack(spacing: 12) {
-                    ForEach(cityWeatherList, id: \.cityName) { cityWeather in
-                        CityCardView(
-                            cityName: cityWeather.cityName,
-                            temperature: cityWeather.temperature,
-                            iconName: cityWeather.iconName,
-                            weatherColor: cityWeather.weatherColor,
-                            onTap: {
-                                print("tapped city: \(cityWeather.cityName)")
-                                router.push(.cityDetails(city: cityWeather))
-                            }
-                        )
+            if cityViewModel.isLoadingWeather {
+                Spacer()
+                LoadingOverlay()
+                Spacer()
+            } else if cityViewModel.cityWeatherList.isEmpty && !cityViewModel.cities.isEmpty {
+                Spacer()
+                Text("No weather data available. Please check your internet connection or try again.")
+                    .font(.custom("Poppins-Regular", size: 14))
+                    .foregroundColor(.theme.onSurfaceColor.opacity(0.6))
+                    .multilineTextAlignment(.center)
+                    .padding()
+                Spacer()
+            } else if cityViewModel.cityWeatherList.isEmpty && cityViewModel.cities.isEmpty {
+                Spacer()
+                Text("No cities added yet. Search for a city above to add it!")
+                    .font(.custom("Poppins-Regular", size: 14))
+                    .foregroundColor(.theme.onSurfaceColor.opacity(0.6))
+                    .multilineTextAlignment(.center)
+                    .padding()
+                Spacer()
+            } else {
+                ScrollView(.vertical,showsIndicators: false){
+                    VStack(spacing: 12) {
+                        ForEach(cityViewModel.cityWeatherList, id: \.cityName) { cityWeather in
+                            CityCardView(
+                                cityName: cityWeather.cityName,
+                                temperature: cityWeather.temperature,
+                                iconName: cityWeather.iconName,
+                                weatherColor: cityWeather.weatherColor,
+                                onTap: {
+                                    print("tapped city: \(cityWeather.cityName)")
+                                    router.push(.cityDetails(city: cityWeather))
+                                }
+                            )
+                        }
                     }
                 }
             }
@@ -79,50 +99,11 @@ struct CityView: View {
         .onAppear {
             themesViewModel.setAppTheme()
             cityViewModel.loadCities()
-            fetchAllStoredCitiesWeather()
-
+            cityViewModel.refreshAllCityWeather()
         }
     }
-    
-    private func fetchAllStoredCitiesWeather() {
-        cityWeatherList = []
-        for city in cityViewModel.cities {
-            if !fetchedCityNames.contains(city.city) {
-                fetchedCityNames.insert(city.city)
-                fetchCityWeather(city: city)
-            }
-        }
-    }
-
-    private func fetchCityWeather(city: City) {
-        Task {
-            await homeViewModel.fetchWeaatherData(
-                lat: "\(city.latitude)",
-                lon: "\(city.longitude)",
-                onSuccess: { response in
-                    let current = response.current
-                    let cityWeather = CityWeather(
-                        cityName: city.city,
-                        temperature: Utils.shared.kelvinToCelsiusString(current.temp),
-                        iconName: Utils.shared.mapIconToSFImage(icon: current.weather.first?.icon ?? ""),
-                        condition: current.weather.first?.description.capitalized ?? "Unknown",
-                        sunDuration: Utils.shared.calculateDaylightDuration(sunrise: current.sunrise,sunset:current.sunset),
-                        humidity: "\(Int(current.humidity))",
-                        windSpeed: "\(current.windSpeed)",
-                        weatherColor: Utils.shared.weatherColor(for: current.weather.first?.main ?? "")
-                    )
-                    Task { @MainActor in
-                        cityWeatherList.append(cityWeather)
-                    }
-                },
-                onFailure: { error in
-                    print("Failed to fetch weather for \(city.city): \(error)")
-                }
-            )
-        }
-    }
-
 }
+
 
 #Preview {
     NavigationView{
