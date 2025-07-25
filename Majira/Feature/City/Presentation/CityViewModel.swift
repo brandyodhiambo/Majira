@@ -53,9 +53,9 @@ class CityViewModel:ObservableObject {
         }
     }
     
-    func deleteCityById(id:UUID) {
+    func deleteCityById(cityName:String) {
         do {
-            try repo.deleteCityById(id:id)
+            try repo.deleteCityByName(cityName:cityName)
             loadCities()
         } catch {
             print("Delete failed: \(error)")

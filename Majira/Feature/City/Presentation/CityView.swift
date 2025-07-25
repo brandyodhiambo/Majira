@@ -17,7 +17,14 @@ struct CityView: View {
     @State var text: String = ""
     @StateObject var cityViewModel:CityViewModel = .init()
     
-    
+    private func deleteCity(_ cityWeather: CityWeather) {
+        if let index = cityViewModel.cityWeatherList.firstIndex(where: { $0.cityName == cityWeather.cityName }) {
+            cityViewModel.deleteCityById(cityName:cityWeather.cityName)
+            cityViewModel.cityWeatherList.remove(at: index)
+        }
+    }
+
+
     var body: some View {
         let router = tabRouter.cityRouter
         VStack(alignment:.leading,spacing:16){
@@ -65,22 +72,31 @@ struct CityView: View {
                     .padding()
                 Spacer()
             } else {
-                ScrollView(.vertical,showsIndicators: false){
-                    VStack(spacing: 12) {
-                        ForEach(cityViewModel.cityWeatherList, id: \.cityName) { cityWeather in
-                            CityCardView(
-                                cityName: cityWeather.cityName,
-                                temperature: cityWeather.temperature,
-                                iconName: cityWeather.iconName,
-                                weatherColor: cityWeather.weatherColor,
-                                onTap: {
-                                    print("tapped city: \(cityWeather.cityName)")
-                                    router.push(.cityDetails(city: cityWeather))
-                                }
-                            )
+                List {
+                    ForEach(cityViewModel.cityWeatherList, id: \.cityName) { cityWeather in
+                        CityCardView(
+                            cityName: cityWeather.cityName,
+                            temperature: cityWeather.temperature,
+                            iconName: cityWeather.iconName,
+                            weatherColor: cityWeather.weatherColor,
+                            onTap: {
+                                print("tapped city: \(cityWeather.cityName)")
+                                router.push(.cityDetails(city: cityWeather))
+                            }
+                        )
+                        .swipeActions {
+                            Button(role: .destructive) {
+                                deleteCity(cityWeather)
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
                         }
+                        .listRowSeparator(.hidden) // optional
+                        .listRowBackground(Color.clear)
                     }
+                    
                 }
+                .listStyle(.plain)
             }
         }
         .padding()

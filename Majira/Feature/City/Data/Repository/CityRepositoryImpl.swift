@@ -54,9 +54,9 @@ class CityRepositoryImpl: CityRepository {
         try context.save()
     }
     
-    func deleteCityById(id: UUID) throws {
+    func deleteCityByName(cityName: String) throws {
         let fetchRequest: NSFetchRequest<CityEntity> = CityEntity.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        fetchRequest.predicate = NSPredicate(format: "city == %@", cityName as CVarArg)
         if let entity = try context.fetch(fetchRequest).first {
             context.delete(entity)
             try context.save()

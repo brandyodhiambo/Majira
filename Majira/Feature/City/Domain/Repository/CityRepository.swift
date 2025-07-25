@@ -13,6 +13,6 @@ protocol CityRepository {
     func getAllCities() throws -> [City]
     func getCityById(id: UUID) throws -> City?
     func updateCity(city: City) throws
-    func deleteCityById(id:UUID) throws
+    func deleteCityByName(cityName:String) throws
     func deleteAllCities() throws
 }
