@@ -18,6 +18,7 @@ struct CityWeather: Hashable, Equatable {
     let humidity: String
     let windSpeed: String
     let weatherColor:Color
+    let hourlyWeather: [HourlyForecast]?
 }
 
 extension CityWeather {
@@ -29,6 +30,7 @@ extension CityWeather {
         sunDuration: "12:00 - 18:00",
         humidity: "60",
         windSpeed: "10",
-        weatherColor: .theme.sunnyYellow
+        weatherColor: .theme.sunnyYellow,
+        hourlyWeather: nil
     )
 }

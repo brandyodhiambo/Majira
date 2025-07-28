@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct HourlyForecast: Codable {
+struct HourlyForecast: Codable,Equatable,Hashable{
     let dt: TimeInterval
     let temp: Double
     let feelsLike: Double

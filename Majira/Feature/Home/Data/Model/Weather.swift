@@ -5,7 +5,7 @@
 //  Created by Brandy Odhiambo on 13/07/2025.
 //
 
-struct Weather: Codable {
+struct Weather: Codable,Equatable,Hashable {
     let id: Int
     let main: String
     let description: String

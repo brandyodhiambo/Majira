@@ -103,7 +103,8 @@ class CityViewModel:ObservableObject {
                         sunDuration: Utils.shared.calculateDaylightDuration(sunrise: current.sunrise, sunset: current.sunset),
                         humidity: "\(Int(current.humidity))",
                         windSpeed: "\(current.windSpeed)",
-                        weatherColor: Utils.shared.weatherColor(for: current.weather.first?.main ?? "")
+                        weatherColor: Utils.shared.weatherColor(for: current.weather.first?.main ?? ""),
+                        hourlyWeather: response.hourly
                     )
                     Task { @MainActor in
                         if !self.cityWeatherList.contains(where: { $0.cityName == cityWeather.cityName }) {
@@ -157,7 +158,8 @@ class CityViewModel:ObservableObject {
                             sunDuration: Utils.shared.calculateDaylightDuration(sunrise: current.sunrise, sunset: current.sunset),
                             humidity: "\(Int(current.humidity))",
                             windSpeed: "\(current.windSpeed)",
-                            weatherColor: Utils.shared.weatherColor(for: current.weather.first?.main ?? "")
+                            weatherColor: Utils.shared.weatherColor(for: current.weather.first?.main ?? ""),
+                            hourlyWeather: response.hourly
                         )
                         Task { @MainActor in
                             if !self.cityWeatherList.contains(where: { $0.cityName == cityWeather.cityName }) {

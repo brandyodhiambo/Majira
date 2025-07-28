@@ -12,9 +12,6 @@ struct CityWeatherDetailsView: View {
     
     let city: CityWeather
     var body: some View {
-        let now = Date()
-        let hours = (-2...2).map { Calendar.current.date(byAdding: .hour, value: $0, to: now)! }
-        
         VStack(spacing: 12) {
             VStack(alignment:.center,spacing: 12){
                 HStack(spacing:2){
@@ -76,14 +73,18 @@ struct CityWeatherDetailsView: View {
                 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 12) {
-                        ForEach(hours, id: \.self) { hour in
-                            let isNow = Calendar.current.component(.hour, from: hour) == Calendar.current.component(.hour, from: now)
-
+                        ForEach(city.hourlyWeather ?? [], id: \.dt) { forecast in
+                            let forecastDate = Date(timeIntervalSince1970: forecast.dt)
+                            let currentHour = Calendar.current.component(.hour, from: Date())
+                            let forecastHour = Calendar.current.component(.hour, from: forecastDate)
+                            let isNow = currentHour == forecastHour
+                            
                             TemperatureCard(
-                                temperature: "\(Int.random(in: 22...28))°",
-                                iconName: isNow ? "sun.max.fill" : "cloud.sun.fill",
-                                date: hour,
-                                isSelected: isNow
+                                temperature: Utils.shared.kelvinToCelsiusString(forecast.temp),
+                                iconName: Utils.shared.mapIconToSFImage(icon: forecast.weather.first?.icon ?? "01d"),
+                                date: forecastDate,
+                                isSelected: isNow,
+                                weatherColor: Utils.shared.weatherColor(for: forecast.weather.first?.main ?? "")
                             )
                         }
                     }
