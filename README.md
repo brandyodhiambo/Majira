@@ -5,7 +5,7 @@
 //  Created by Brandy Odhiambo on 01/08/2025.
 //
 
-<p align="center"><img src="project/128.png" alt="Majira" height="250px"></p>
+<p align="center"><img src="project/128.png" alt="Majira" height="300px"></p>
 
 # 🌤️ Majira App
 A simple and clean weather app that shows current conditions, hourly updates, and upcoming forecasts. Built with SwiftUI and powered by OpenWeather, it's designed to give quick, beautiful insights into your local weather at a glance
@@ -19,7 +19,7 @@ The app follows the Model-View-ViewModel (MVVM) pattern, enhanced with principle
 By combining MVVM with clean architecture layers (such as Use Cases, Repositories, and Services), the codebase stays modular, testable, and easy to scale as the app grows.
 
 ### Landing Screen
-<img src="project/majira_location.png" width="250"/> <img src="project/majira_start.png" width="250"/>
+<img src="project/majira_location.png" width="250"/> <img src="project/majira_start_screen.png" width="250"/>
 
 ### Home Screen
  <img src="project/majira_home_dark.png" width="250"/> <img src="project/majira_home_light.png" width="250"/>
@@ -45,11 +45,20 @@ By combining MVVM with clean architecture layers (such as Use Cases, Repositorie
 - [**Core Data**](https://developer.apple.com/documentation/coredata)
   Core Data is Apple’s framework for managing the model layer of applications. It provides powerful tools for object graph management and persistence, allowing developers to store and query data efficiently on-device.
 
-- **Clean Architecture**
+- [**Clean Architecture**](https://www.geeksforgeeks.org/system-design/complete-guide-to-clean-architecture/)
   Clean Architecture is a design pattern that separates the codebase into distinct layers (e.g., domain, data, and presentation), improving testability, scalability, and maintainability. It enforces a clear separation of concerns in Swift-based projects.
 
-- **Navigation in Swift**
+- [**Navigation in Swift**](https://developer.apple.com/documentation/swiftui/navigation)
   Navigation in Swift refers to the techniques used to move between views and screens in iOS applications. With SwiftUI, navigation is handled declaratively using `NavigationStack` or `NavigationLink`, making it easier to manage app flow and user experience.
+                            
+- [**Location Access in iOS**](https://developer.apple.com/documentation/corelocation/cllocationmanager)
+    Location access allows the app to retrieve the user’s current geographic position using the `CoreLocation` framework. `CLLocationManager` is used to request permissions, start location updates, and respond to location changes, enabling features like weather updates based on real-time user location.
+
+- [**Network Calls in Swift**](https://developer.apple.com/documentation/foundation/urlsession)
+    Network calls in Swift are commonly handled using `URLSession`, which enables communication with remote servers over HTTP. In this app, it's used to fetch weather data by making asynchronous API requests, decoding the JSON response into Swift models, and updating the UI accordingly.
+                               
+- [**App Theming in SwiftUI**](https://developer.apple.com/documentation/swiftui/environmentvalues/colorScheme)
+    App theming in SwiftUI involves customizing the appearance of UI elements based on user preferences or system settings. This app uses a dynamic light/dark theme switcher controlled via `@Environment(\.colorScheme)` and a shared theme manager, allowing consistent styling across views while improving user experience and accessibility.
 
 
 ## Setup Requirements
