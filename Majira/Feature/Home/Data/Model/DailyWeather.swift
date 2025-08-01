@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct DailyWeather: Codable {
     let dt: TimeInterval
@@ -26,7 +27,6 @@ struct DailyWeather: Codable {
     let weather: [Weather]
     let clouds: Int
     let pop: Double
-    let rain: Double?
     let uvi: Double
 
     enum CodingKeys: String, CodingKey {
@@ -39,36 +39,8 @@ struct DailyWeather: Codable {
         case windSpeed = "wind_speed"
         case windDeg = "wind_deg"
         case windGust = "wind_gust"
-        case weather, clouds, pop, rain, uvi
-    }
-
-
-    var day: String {
-        let date = Date(timeIntervalSince1970: dt)
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE"
-        return formatter.string(from: date)
-    }
-
-    var dateString: String {
-        let date = Date(timeIntervalSince1970: dt)
-        let formatter = DateFormatter()
-        formatter.dateFormat = "d MMM"
-        return formatter.string(from: date)
-    }
-
-    var iconName: String {
-        Utils.shared.mapIconToSFImage(icon: weather.first?.icon ?? "01d")
-    }
-
-    var temperatureString: String {
-        "\(Utils.shared.kelvinToCelsiusString(temp.max)) / \(Utils.shared.kelvinToCelsiusString(temp.min))"
-    }
-
-    var weatherColor: Color {
-        Utils.shared.weatherColor(for: weather.first?.main ?? "")
+        case weather, clouds, pop, uvi
     }
 }
-
 
 

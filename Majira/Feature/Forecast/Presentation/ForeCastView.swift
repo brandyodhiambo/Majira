@@ -13,11 +13,9 @@ struct ForeCastView: View {
     @StateObject var locationManager = LocationManager()
     @State var weatherResponse: WeatherResponse?
     @State var hourlyForecasts: [HourlyForecast] = []
+    @State var dailyForecasts: [DailyWeather] = []
     var themeToggleIcon: String {
         themesViewModel.currentTheme == .dark ? "sun.max.fill" : "moon.fill"
-    }
-    var dailyForecasts: [DailyWeather] {
-        weatherResponse?.daily ?? []
     }
     
     var body: some View {
@@ -53,17 +51,43 @@ struct ForeCastView: View {
             VStack(alignment:.leading, spacing:16){
                 Text("Next Forecasts")
                     .font(.custom("Poppins-Medium", size: 16))
-                    .foregroundColor(.theme.onSurfaceColor.opacity(0.8))
+                    .foregroundColor(.theme.onSurfaceColor.opacity(0.7))
                 
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 12) {
                         ForEach(dailyForecasts, id: \.dt) { forecast in
+                            var day: String {
+                                let date = Date(timeIntervalSince1970: forecast.dt)
+                                let formatter = DateFormatter()
+                                formatter.dateFormat = "EEEE"
+                                return formatter.string(from: date)
+                            }
+
+                            var dateString: String {
+                                let date = Date(timeIntervalSince1970: forecast.dt)
+                                let formatter = DateFormatter()
+                                formatter.dateFormat = "d MMM"
+                                return formatter.string(from: date)
+                            }
+
+                            var iconName: String {
+                                Utils.shared.mapIconToSFImage(icon: forecast.weather.first?.icon ?? "01d")
+                            }
+
+                            var temperatureString: String {
+                                "\(Utils.shared.kelvinToCelsiusString(forecast.temp.max)) / \(Utils.shared.kelvinToCelsiusString(forecast.temp.min))"
+                            }
+
+                            var weatherColor: Color {
+                                Utils.shared.weatherColor(for: forecast.weather.first?.main ?? "")
+                            }
+                                        
                             ForecastRowView(
-                                day: forecast.day,
-                                date: forecast.dateString,
-                                icon: forecast.iconName,
-                                temperature: forecast.temperatureString,
-                                weatherColor: forecast.weatherColor
+                                day: day,
+                                date: dateString,
+                                icon: iconName,
+                                temperature: temperatureString,
+                                weatherColor: weatherColor
                             )
                         }
                     }
@@ -98,6 +122,7 @@ struct ForeCastView: View {
                 onSuccess:{ data in
                     self.weatherResponse = data
                     self.hourlyForecasts = data.hourly ?? []
+                    self.dailyForecasts = Array((data.daily ?? []).dropFirst())
                 },
                 onFailure: { error in
                    print("Debug: Failed to fetch weather data: \(error)")

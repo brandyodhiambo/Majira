@@ -15,7 +15,7 @@ struct WeatherResponse: Codable {
     let current: CurrentWeather
     var minutely: [MinutelyForecast]? = nil
     var hourly: [HourlyForecast]? = nil
-    let daily: [DailyWeather]? = nil
+    var daily: [DailyWeather]? = nil
 
     enum CodingKeys: String, CodingKey {
         case lat, lon, timezone

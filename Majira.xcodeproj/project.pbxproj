@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0465CA832E3CAB9900901177 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 0465CA822E3CAB8E00901177 /* README.md */; };
 		047393D82E1658C900E66C37 /* Poppins-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 047393C62E1658C900E66C37 /* Poppins-Black.ttf */; };
 		047393D92E1658C900E66C37 /* Poppins-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 047393D02E1658C900E66C37 /* Poppins-LightItalic.ttf */; };
 		047393DA2E1658C900E66C37 /* Poppins-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 047393CB2E1658C900E66C37 /* Poppins-ExtraBoldItalic.ttf */; };
@@ -46,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0465CA822E3CAB8E00901177 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		047393C62E1658C900E66C37 /* Poppins-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Black.ttf"; sourceTree = "<group>"; };
 		047393C72E1658C900E66C37 /* Poppins-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-BlackItalic.ttf"; sourceTree = "<group>"; };
 		047393C82E1658C900E66C37 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
@@ -80,6 +82,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		0465CA812E3CAB8100901177 /* project */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = project;
+			sourceTree = "<group>";
+		};
 		047CE3792E14FBF80021B240 /* Majira */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -129,6 +136,8 @@
 		047CE36E2E14FBF80021B240 = {
 			isa = PBXGroup;
 			children = (
+				0465CA822E3CAB8E00901177 /* README.md */,
+				0465CA812E3CAB8100901177 /* project */,
 				047CE3792E14FBF80021B240 /* Majira */,
 				047CE38A2E14FBF90021B240 /* MajiraTests */,
 				047CE3942E14FBF90021B240 /* MajiraUITests */,
@@ -180,6 +189,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				0465CA812E3CAB8100901177 /* project */,
 				047CE3792E14FBF80021B240 /* Majira */,
 			);
 			name = Majira;
@@ -289,6 +299,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				047393D82E1658C900E66C37 /* Poppins-Black.ttf in Resources */,
+				0465CA832E3CAB9900901177 /* README.md in Resources */,
 				047393D92E1658C900E66C37 /* Poppins-LightItalic.ttf in Resources */,
 				047393DA2E1658C900E66C37 /* Poppins-ExtraBoldItalic.ttf in Resources */,
 				047393DB2E1658C900E66C37 /* Poppins-ExtraBold.ttf in Resources */,
