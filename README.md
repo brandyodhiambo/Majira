@@ -1,9 +1,3 @@
-//
-//  README.md
-//  Majira
-//
-//  Created by Brandy Odhiambo on 01/08/2025.
-//
 
 <p align="center"><img src="project/128.png" alt="Majira" height="300px"></p>
 
