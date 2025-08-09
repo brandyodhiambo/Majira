@@ -12,7 +12,7 @@ struct WeatherDataSource {
         lat: String,
         lon: String
     ) async -> Result<WeatherResponse,NetworkError>{
-        guard let url = Constants.APIEdpoint.allData(lat: lat, lon: lon, apiId: "a2b4be21d2ad97df907367e55e77a9e3").url else {
+        guard let url = Constants.APIEdpoint.allData(lat: lat, lon: lon, apiId: "YOUR_WEATHER_API_KEY").url else {
             return .failure(NetworkError.badURL)
         }
         

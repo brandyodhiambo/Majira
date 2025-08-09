@@ -64,6 +64,7 @@ In order to get the app running yourself, you need to:
 
 1.  Clone this project
 2.  Import the project into XCode
+3.  Get weather Api key from [Here](https://openweathermap.org/api) and add it to data source within the codebase.
 3.  Connect your IOS device with USB or just start your Simulator
 4.  After the project has finished setting up it stuffs, click the run button
 
